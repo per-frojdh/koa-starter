@@ -1,5 +1,5 @@
 module.exports = {
-  plugins: ['node', 'security'],
+  plugins: ['prettier', 'node', 'security'],
   extends: [
     'airbnb-base',
     'plugin:node/recommended',
