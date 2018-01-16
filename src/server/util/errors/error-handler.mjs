@@ -5,7 +5,7 @@ class ErrorHandler {
     if (e.isOperational) {
       logger.log('error', e);
     } else {
-      logger.log('info', e.description);
+      logger.log('info', e.description || e);
     }
   }
 }

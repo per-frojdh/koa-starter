@@ -20,6 +20,8 @@
     "koa-morgan": "1.0.1",
     "koa-router": "^7.2.1",
     "nanoid": "1.0.1",
+    "vue": "2.5.13",
+    "vue-server-renderer": "2.5.13",
     "winston": "3.0.0-rc1"
   },
   "devDependencies": {
