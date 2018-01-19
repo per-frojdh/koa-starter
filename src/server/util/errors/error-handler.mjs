@@ -2,10 +2,11 @@ import logger from '../logger.mjs';
 
 class ErrorHandler {
   static handleError(e) {
+    console.log(e);
     if (e.isOperational) {
-      logger.log('error', e);
+      logger.error.log('error', e);
     } else {
-      logger.log('info', e.description);
+      logger.error.log('info', e.description || e);
     }
   }
 }

@@ -7,11 +7,14 @@ import './util/errors/unhandled-errors.mjs';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import helmet from 'koa-helmet';
+import combineRouters from 'koa-combine-routers';
 
 import logger from './util/logger';
-import router from './routes';
 import middlewares from './middleware';
 import errorMiddlewares from './util/errors/error-middlewares.mjs';
+
+import users from './components/users';
+import organization from './components/organization';
 
 const app = new Koa();
 
@@ -24,7 +27,9 @@ app
     enableTypes: ['form', 'urlencoded', 'json'],
   }));
 
-app.use(router.routes());
+const router = combineRouters([users.router, organization.router]);
+
+app.use(router);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => logger.log('info', `Server started on ${PORT}`));
+app.listen(PORT, () => console.log('info', `Server started on ${PORT}`));

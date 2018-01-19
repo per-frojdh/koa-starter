@@ -2,7 +2,7 @@ import Router from 'koa-router';
 
 const router = new Router();
 
-router.get('/ping', async (ctx, next) => {
+router.get('name', '/ping', async (ctx, next) => {
   ctx.body = 'PONG';
 });
 
