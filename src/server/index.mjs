@@ -22,7 +22,9 @@ const router = combineRouters([users.router, organization.router]);
 
 app
   .use(helmet())
+  .use(middlewares.responseTimeHandler)
   .use(middlewares.transactionIdHandler)
+  .use(middlewares.accessLoggerHandler)
   .use(bodyParser({
     enableTypes: ['form', 'urlencoded', 'json'],
   }))

@@ -16,6 +16,7 @@
     "@std/esm": "0.19.1",
     "casual": "1.5.19",
     "chalk": "2.3.0",
+    "date-fns": "1.29.0",
     "dotenv": "^4.0.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
