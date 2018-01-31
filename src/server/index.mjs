@@ -18,18 +18,19 @@ import organization from './components/organization';
 
 const app = new Koa();
 
+const router = combineRouters([users.router, organization.router]);
+
 app
   .use(helmet())
-  .use(errorMiddlewares.errorHandler)
-  .use(errorMiddlewares.httpCodeHandler)
   .use(middlewares.transactionIdHandler)
   .use(bodyParser({
     enableTypes: ['form', 'urlencoded', 'json'],
-  }));
+  }))
+  .use(router);
 
-const router = combineRouters([users.router, organization.router]);
-
-app.use(router);
+// Error related middleware should end up last.
+app.use(errorMiddlewares.errorHandler)
+  .use(errorMiddlewares.httpCodeHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log('info', `Server started on ${PORT}`));

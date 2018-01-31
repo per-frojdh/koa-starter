@@ -39,13 +39,15 @@ const httpCodeHandler = async (ctx, next) => {
         'Page not found',
         false,
       );
-    default:
+    case 500:
       throw new ApplicationError(
         commonErrors.SystemError,
         httpErrors.InternalServerError,
-        'Page not found',
+        'Internal Server Error',
         true,
       );
+    default:
+      break;
   }
 };
 

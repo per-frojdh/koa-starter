@@ -11,4 +11,4 @@ const accessLoggerHandler = async (ctx, next) => {
   await next();
 };
 
-export default { transactionIdHandler };
+export default { transactionIdHandler, accessLoggerHandler };
