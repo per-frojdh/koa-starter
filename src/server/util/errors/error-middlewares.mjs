@@ -2,6 +2,8 @@ import ApplicationError from './unhandled-errors.mjs';
 import ErrorHandler from './error-handler.mjs';
 import { commonErrors, httpErrors } from './error-types.mjs';
 
+const isApplicationError = err => err instanceof ApplicationError;
+
 /**
  * The errorHandler is responsible for throwing the appropriate error page to the end user
  * and is able to use the data extracted from our ApplicationError.
@@ -14,10 +16,18 @@ const errorHandler = async (ctx, next) => {
   } catch (err) {
     // This allows us to distinguish operational errors from simple application errors like PageNotFound
     // or particular errors like 'Entity Not Found' etc.
-    ErrorHandler.handleError(err);
+    if (!isApplicationError(err)) {
+      err.isOperational = false;
+    }
+    ErrorHandler.handleError(err, ctx);
     err.status = err.statusCode || err.status || 500;
+    ctx.status = err.status;
+    const message = err.description || 'Internal Server Error';
     ctx.body = {
-      message: err.description,
+      code: err.status,
+      message,
+      transaction: ctx.transaction,
+      path: ctx.originalUrl,
     };
   }
 };

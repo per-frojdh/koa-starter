@@ -20,6 +20,8 @@ const app = new Koa();
 
 const router = combineRouters([users.router, organization.router]);
 
+// Request related middlewares, ie. middlewares operating on the context
+// before it has been passed into a router and towards the request process.
 app
   .use(helmet())
   .use(middlewares.responseTimeHandler)
@@ -28,11 +30,12 @@ app
   .use(bodyParser({
     enableTypes: ['form', 'urlencoded', 'json'],
   }))
-  .use(router);
-
-// Error related middleware should end up last.
-app.use(errorMiddlewares.errorHandler)
+  .use(errorMiddlewares.errorHandler)
+  .use(router)
   .use(errorMiddlewares.httpCodeHandler);
+
+// Response related middlewares
+// app.use(errorMiddlewares.httpCodeHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log('info', `Server started on ${PORT}`));

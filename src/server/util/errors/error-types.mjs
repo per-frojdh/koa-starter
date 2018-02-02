@@ -1,6 +1,7 @@
 const commonErrors = {
   PageNotFound: 'Page Not Found',
   SystemError: 'Internal Server Error',
+  BadRequest: 'Bad Request',
 };
 
 const httpErrors = {

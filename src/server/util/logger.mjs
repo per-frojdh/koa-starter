@@ -6,24 +6,26 @@ const {
   combine, timestamp, label, printf,
 } = winston.format;
 
+const errorlogFormat = printf((info) => {
+  const stamp = dateFn.format(info.timestamp, 'YYYY-MM-DD HH:mm:ss');
+  return `${info.label}: ${stamp} - [${info.transaction}:${info.path}] - ${
+    info.stack
+  }`;
+});
+
 const error = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.Console({
-      level: 'info',
-      format: winston.format.simple(),
-    }),
-  ],
+  level: 'error',
+  format: combine(label({ label: 'ERROR' }), timestamp(), errorlogFormat),
+  transports: [new winston.transports.Console({})],
 });
 
 const getStatusColor = (code) => {
   if (code >= 200 && code <= 299) {
     return chalk.bgGreen(code);
   } else if (code >= 300 && code <= 399) {
-    return chalk.bgWhite(code);
+    return chalk.black.bgWhite(code);
   } else if (code >= 400 && code <= 499) {
-    return chalk.bgYellow(code);
+    return chalk.black.bgYellow(code);
   } else if (code >= 500 && code <= 599) {
     return chalk.bgRed(code);
   }
